@@ -1,6 +1,6 @@
 package marsrover.parser;
 
-import marsrover.CompassDirection;
+import marsrover.direction.Direction;
 
 public class PositionParser extends Parser<Object[]> {
     @Override
@@ -14,7 +14,7 @@ public class PositionParser extends Parser<Object[]> {
         try {
             int x = Integer.parseInt(inputArr[0]);
             int y = Integer.parseInt(inputArr[1]);
-            CompassDirection direction = CompassDirection.valueOf(inputArr[2]);
+            Direction direction = Direction.valueOf(inputArr[2]);
 
             return new Object[]{x, y, direction};
         } catch (NumberFormatException e) {
