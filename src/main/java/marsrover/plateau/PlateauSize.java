@@ -9,8 +9,8 @@ public class PlateauSize {
             throw new IllegalArgumentException("Plateau size must be greater than (0, 0)");
         }
 
-        this.x = x;
-        this.y = y;
+        this.x = x + 1;
+        this.y = y + 1;
     }
 
     public int getX() {
@@ -22,6 +22,6 @@ public class PlateauSize {
     }
 
     public String formatSize() {
-        return String.format("%s %s", (x + 1), (y + 1));
+        return String.format("%s %s", x, y);
     }
 }
