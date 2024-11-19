@@ -59,17 +59,15 @@ public class MarsRoverTest {
         Rover rover3 = new Rover("MR-CRSHDUMY");
 
         Plateau plateau = new Plateau(new PlateauSize(5, 5));
-        Position position1 = new Position(5, 5, Direction.S);
-        Position position2 = new Position(5, 3, Direction.N);
 
-        rover1.landOnPlateau(plateau, position1);
-        rover2.landOnPlateau(plateau, position2);
+        rover1.landOnPlateau(plateau, new Position(5, 5,  Direction.S));
+        rover2.landOnPlateau(plateau, new Position(5, 3, Direction.N));
 
         List<Command> commands = List.of(Command.M, Command.M);
 
         assertThrows(RoverCollisionException.class, () -> rover1.executeCommands(commands));
         assertThrows(RoverCollisionException.class, () -> rover2.executeCommands(commands));
-        assertThrows(RoverCollisionException.class, () -> rover3.landOnPlateau(plateau, position1));
+        assertThrows(RoverCollisionException.class, () -> rover3.landOnPlateau(plateau, new Position(5, 5, Direction.S)));
     }
 
     @Test
