@@ -30,6 +30,10 @@ public class Rover {
             throw new RoverAlreadyLandedException("Cannot initiate launch sequence when rover is already landed.");
         }
 
+        if (!plateau.isPositionEmpty(position)) {
+            throw new RoverCollisionException("Cannot initiate launch sequence when given position is already occupied.");
+        }
+
         this.plateau = plateau;
         this.position = position;
 
