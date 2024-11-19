@@ -120,6 +120,28 @@ public class RoverTest {
     }
 
     @Test
+    @DisplayName("executeCommands: should not change direction or move when given commands that throws an exception")
+    void testExecuteCommandsWithInvalidInputs() {
+        var plateau = new Plateau(new PlateauSize(5, 5));
+        var rover = new Rover("MR-PROTOTYPE");
+        var initialPosition = new Position(1, 2, Direction.N);
+
+        rover.landOnPlateau(plateau, initialPosition);
+
+        assertEquals("1 2 N", rover.reportPosition());
+
+        var commands1 = List.of(Command.L, Command.M, Command.M);
+        var commands2 = List.of(Command.M, Command.M);
+
+        assertThrows(PositionOutOfBoundsException.class, ()-> rover.executeCommands(commands1));
+        assertEquals("1 2 N", rover.reportPosition());
+
+        rover.executeCommands(commands2);
+
+        assertEquals("1 4 N", rover.reportPosition());
+    }
+
+    @Test
     @DisplayName("executeCommands: should throw PositionOutOfBoundsException when trying to move rover out of Plateau")
     void testExecuteCommandsWhenMovingOutOfBounds() {
         var plateau = new Plateau(new PlateauSize(5, 5));
