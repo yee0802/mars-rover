@@ -72,6 +72,21 @@ public class RoverTest {
     }
 
     @Test
+    @DisplayName("landOnPlateau: should not be able to land on occupied position")
+    void testLandOnPlateauWithOccupiedPosition() {
+        var plateau = new Plateau(new PlateauSize(5, 5));
+
+        var position = new Position(1, 5, Direction.N);
+
+        var rover1 = new Rover("mk1");
+        var rover2 = new Rover("mk1v2");
+
+        rover1.landOnPlateau(plateau, position);
+
+        assertThrows(RoverCollisionException.class, () -> rover2.landOnPlateau(plateau, position));
+    }
+
+    @Test
     @DisplayName("executeCommands: should move rover correctly when given valid list of commands")
     void testExecuteCommands() {
         var plateau1 = new Plateau(new PlateauSize(5, 5));
@@ -105,13 +120,13 @@ public class RoverTest {
     }
 
     @Test
-    @DisplayName("executeCommands: should return PositionOutOfBoundsException when trying to move rover out of Plateau")
+    @DisplayName("executeCommands: should throw PositionOutOfBoundsException when trying to move rover out of Plateau")
     void testExecuteCommandsWhenMovingOutOfBounds() {
         var plateau = new Plateau(new PlateauSize(5, 5));
 
         var position1 = new Position(1, 5, Direction.N);
         var position2 = new Position(0, 0, Direction.S);
-        var position3 = new Position(1, 5, Direction.N);
+        var position3 = new Position(4, 2, Direction.S);
 
         var rover1 = new Rover("mk1");
         var rover2 = new Rover("mk2");
@@ -129,7 +144,7 @@ public class RoverTest {
     }
 
     @Test
-    @DisplayName("executeCommands: should return RoverCollisionException when trying to move rover into an occupied position")
+    @DisplayName("executeCommands: should throw RoverCollisionException when trying to move rover into an occupied position")
     void testExecuteCommandsWhenMovingIntoAnotherRover() {
         var plateau = new Plateau(new PlateauSize(5, 5));
 
