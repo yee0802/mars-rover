@@ -41,12 +41,19 @@ public class Rover {
     }
 
     public String executeCommands(List<Command> commands) {
-        for (Command cmd : commands) {
-            switch (cmd) {
-                case L -> turnLeft();
-                case R -> turnRight();
-                case M -> move();
+        Position originalPosition = new Position(position.getX(), position.getY(), position.getDirection());
+
+        try {
+            for (Command cmd : commands) {
+                switch (cmd) {
+                    case L -> turnLeft();
+                    case R -> turnRight();
+                    case M -> move();
+                }
             }
+        } catch (Exception e) {
+            this.position = originalPosition;
+            throw e;
         }
 
         return position.formatPosition();
@@ -85,6 +92,10 @@ public class Rover {
     }
 
     public String reportPosition() {
+        if (position == null) {
+            throw new IllegalArgumentException("Position cannot be null.");
+        }
+
         return position.formatPosition();
     }
 
